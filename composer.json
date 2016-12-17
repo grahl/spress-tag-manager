@@ -1,0 +1,16 @@
+{
+    "name": "grahl/spress-tag-manager",
+    "type": "spress-plugin",
+    "description": "Provides command line functions to interact with tags.",
+    "keywords": ["spress", "plugin"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hendrik Grahl",
+            "email": "hendrik@grahl.ch"
+        }
+    ],
+    "require": {
+        "spress/spress-installer": "2.0.*"
+    }
+}
