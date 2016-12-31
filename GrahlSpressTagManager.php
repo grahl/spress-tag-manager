@@ -11,7 +11,7 @@ use Yosymfony\Spress\Plugin\CommandPlugin;
 
 class GrahlSpressTagManager extends CommandPlugin {
 
-  protected $tags = [];
+  private static $tags = [];
 
 
   public function initialize(EventSubscriber $subscriber) {
@@ -44,9 +44,8 @@ class GrahlSpressTagManager extends CommandPlugin {
     $environment = $this->getCommandEnvironment();
 
     $environment->runCommand('site:build', []);
-    // TODO: Be able to do this without a global variable.
-    global $tag_list;
-    $list = array_count_values($tag_list);
+
+    $list = array_count_values(self::$tags);
     uksort($list, 'strcasecmp');
     foreach ($list as $tag => $count) {
       $io->write($tag  . ' (' . $count . ')');
@@ -54,11 +53,10 @@ class GrahlSpressTagManager extends CommandPlugin {
   }
 
   public function beforeConvert(ContentEvent $event) {
-    global $tag_list;
     $item = $event->getItem();
     if (isset($item->getAttributes()['tags'])) {
       foreach ($item->getAttributes()['tags'] as $tag) {
-        $tag_list[] = $tag;
+        self::$tags[] = $tag;
       }
     }
   }
